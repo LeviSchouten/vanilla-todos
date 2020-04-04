@@ -2,8 +2,12 @@ class TodoList {
   constructor() {
 
     this.state = {
-      todo: ['dishes', 'homework', 'cook', 'naar buiten'],
-      done: ['make bed'],
+      todo: localStorage.getItem('todo')
+        ? localStorage.getItem('todo').split(',')
+        : [],
+      done: localStorage.getItem('done')
+        ? localStorage.getItem('done').split(',')
+        : [],
     }
   }
 
@@ -17,7 +21,7 @@ class TodoList {
   }
 
   generateDoneItem(item, key) {
-    return `<li class='done'><h3 data-key="${key}">${item}</h3><button>X</button></li>`;
+    return `<li class='done'><h3 data-key="${key}">${item}</h3><p><i class="fas fa-times"></i></p></li>`;
   }
 
   generateTodoList() {
@@ -39,16 +43,25 @@ class TodoList {
       return this.setState({ todo: newTodo });
     }
     const newItem = this.state.todo.splice(item.dataset.key, 1);
-    const newDone = [newItem, ...this.state.done];
+    const newDone = [...this.state.done, newItem];
     this.setState({ done: newDone });
   }
 
   addClickEventsToItem() {
-    const li = document.querySelectorAll('li');
+    const li = document.querySelectorAll('li > h3');
     li.forEach(item => item
       .addEventListener('click', event => (
         this.itemToggle(event.target)
       )))
+  }
+
+  addCLickEventsToButtons() {
+    const buttons = document.querySelectorAll('li > p');
+    buttons.forEach(button => button
+      .addEventListener('click', (event) => {
+        this.state.done.splice(button.parentNode.firstChild.dataset.key, 1);
+        this.setState({ todo: this.state.todo })
+      }))
   }
 
   addTodoItem(item) {
@@ -57,10 +70,13 @@ class TodoList {
   }
 
   render() {
+    localStorage.setItem('todo', this.state.todo)
+    localStorage.setItem('done', this.state.done)
     const div = document.querySelector('.todos')
     div.innerHTML = 'Todo:';
     div.innerHTML += this.generateTodoList()
     this.addClickEventsToItem()
+    this.addCLickEventsToButtons()
   }
 
 }
@@ -69,8 +85,10 @@ const button = document.querySelector('.submit-button');
 const input = document.querySelector('.todo-title');
 button.addEventListener('click', (event) => {
   event.preventDefault();
+  if (input.value === '') return;
   todoList.addTodoItem(input.value);
+  input.value = '';
 })
 
 const todoList = new TodoList();
-console.log(todoList.render())
+todoList.render()

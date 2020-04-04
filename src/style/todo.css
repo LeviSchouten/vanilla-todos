@@ -2,6 +2,53 @@
   box-sizing: border-box;
 }
 
+body {
+  font-family: 'Baloo Thambi 2', cursive;
+}
+
+.app {
+  max-width: 180px;
+}
+
 .done {
-  background-color: red;
+  color: #aaaaaa;
+}
+
+.done > h3 {
+  text-decoration: line-through;
+}
+
+.done > h3:hover {
+  text-decoration: none;
+  color: #aaaaaa;
+}
+
+button {
+  padding: 0;
+  border: none;
+}
+
+.fas {
+  color: #aaaaaa;
+}
+
+.fas:hover {
+  color: #f14040;
+}
+
+li {
+  align-content: space-around;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  max-height: 40px;
+}
+
+.submit-button {
+  border: none;
+  background-color: #00bcd4;
+  color: #ffffff;
+  padding: 1px 7px 3px 7px;
+  font-size: 1.2rem;
+  border-radius: 50%;
 }
