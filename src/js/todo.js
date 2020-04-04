@@ -8,50 +8,81 @@ class TodoItem {
   }
 }
 
-
-// wrap this all in a class (look in to getters and setters)
-
 const state = {
   todos: [],
   dones: []
+}
+
+const renderTodoList = (array) => (
+  array.map((item, index) =>
+    `<li>
+    <h2 data-key="${index}">${item.title}</h2>
+    <p>${item.description}</p>
+    </li>`)
+)
+
+const renderDoneList = (array) => (
+  array.map((item, index) =>
+    `<li>
+    <h2 data-key="${index}">${item.title}</h2>
+    <p>${item.description}</p>
+    <button>X</button>
+    </li>`)
+)
+
+const appendList = (array, parent) => {
+  array.forEach(item => { parent.innerHTML += item })
+}
+
+const statePush = (item, array) => {
+  state[array] = [...state[array], item];
+  render()
 }
 
 const handleSubmit = (event) => {
   event.preventDefault()
   const title = document.querySelector('.todo-title');
   const description = document.querySelector('.todo-description');
-  state.todos.push(new TodoItem(title.value, description.value));
+  const item = new TodoItem(title.value, description.value);
+  statePush(item, 'todos');
   title.value = '';
   description.value = '';
-  render()
-}
-
-const renderList = (array) => (
-  array.map((item, index) =>
-    `<li data-key=${index}>
-    <h2>${item.title}</h2>
-    <p>${item.description}</p>
-    </data>
-    </li>`)
-)
-
-const appendList = (array, parent) => {
-  parent.innerHTML = '';
-  array.forEach(item => { parent.innerHTML += item })
 }
 
 const render = () => {
   const todosElement = document.querySelector('.todos');
-  appendList(renderList(state.todos), todosElement)
+  todosElement.innerHTML = '';
+  appendList(renderTodoList(state.todos), todosElement);
   todosElement.querySelectorAll('li')
     .forEach(item => item.addEventListener('click', (event) => {
-      console.log(event.target.key)
+      const index = event.target.dataset.key
+      const doneItem = state.todos.splice(index, 1)[0];
+      event.target.classList.toggle('done')
+      statePush(doneItem, 'dones');
     }))
+  appendList(renderDoneList(state.dones), todosElement)
 }
+
+
+
+
+
+// const render = () => {
+//   const todosElement = document.querySelector('.todos');
+//   appendList(renderTodoList(state.todos), todosElement)
+//   todosElement.querySelectorAll('li')
+//     .forEach(item => item.addEventListener('click', (event) => {
+//       console.log(event.target.dataset.key) // index of item
+//     }))
+// }
 
 window.onload = () => {
   document.querySelector('.submit-button')
     .addEventListener('click', handleSubmit);
 }
 
-console.log('🚀');
+// console.log('🚀');
+
+// const setState = (object) => {
+//   state = { ...state, ...object };
+// }
