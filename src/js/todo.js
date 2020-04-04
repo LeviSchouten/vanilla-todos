@@ -73,8 +73,7 @@ class TodoList {
     localStorage.setItem('todo', this.state.todo)
     localStorage.setItem('done', this.state.done)
     const div = document.querySelector('.todos')
-    div.innerHTML = 'Todo:';
-    div.innerHTML += this.generateTodoList()
+    div.innerHTML = this.generateTodoList()
     this.addClickEventsToItem()
     this.addCLickEventsToButtons()
   }
