@@ -1,88 +1,76 @@
-// render function that appends all to dom
-// setstate function that changes the state and calls render
+class TodoList {
+  constructor() {
 
-class TodoItem {
-  constructor(title, description) {
-    this.title = title;
-    this.description = description;
+    this.state = {
+      todo: ['dishes', 'homework', 'cook', 'naar buiten'],
+      done: ['make bed'],
+    }
   }
+
+  setState(object) {
+    this.state = { ...this.state, ...object };
+    this.render()
+  }
+
+  generateTodoItem(item, key) {
+    return `<li><h3 data-key="${key}">${item}</h3></li>`;
+  }
+
+  generateDoneItem(item, key) {
+    return `<li class='done'><h3 data-key="${key}">${item}</h3><button>X</button></li>`;
+  }
+
+  generateTodoList() {
+    let html = '<ul>';
+    this.state.todo.forEach((todo, index) => (
+      html += this.generateTodoItem(todo, index)
+    ))
+    this.state.done.forEach((done, index) => (
+      html += this.generateDoneItem(done, index)
+    ))
+    html += '</ul>';
+    return html;
+  }
+
+  itemToggle(item) {
+    if (item.parentNode.classList.contains('done') || item.classList.contains('done')) {
+      const newItem = this.state.done.splice(item.dataset.key, 1);
+      const newTodo = [newItem, ...this.state.todo];
+      return this.setState({ todo: newTodo });
+    }
+    const newItem = this.state.todo.splice(item.dataset.key, 1);
+    const newDone = [newItem, ...this.state.done];
+    this.setState({ done: newDone });
+  }
+
+  addClickEventsToItem() {
+    const li = document.querySelectorAll('li');
+    li.forEach(item => item
+      .addEventListener('click', event => (
+        this.itemToggle(event.target)
+      )))
+  }
+
+  addTodoItem(item) {
+    const newTodo = [item, ...this.state.todo];
+    this.setState({ todo: newTodo });
+  }
+
+  render() {
+    const div = document.querySelector('.todos')
+    div.innerHTML = 'Todo:';
+    div.innerHTML += this.generateTodoList()
+    this.addClickEventsToItem()
+  }
+
 }
 
-const state = {
-  todos: [],
-  dones: []
-}
+const button = document.querySelector('.submit-button');
+const input = document.querySelector('.todo-title');
+button.addEventListener('click', (event) => {
+  event.preventDefault();
+  todoList.addTodoItem(input.value);
+})
 
-const renderTodoList = (array) => (
-  array.map((item, index) =>
-    `<li>
-    <h2 data-key="${index}">${item.title}</h2>
-    <p>${item.description}</p>
-    </li>`)
-)
-
-const renderDoneList = (array) => (
-  array.map((item, index) =>
-    `<li>
-    <h2 data-key="${index}">${item.title}</h2>
-    <p>${item.description}</p>
-    <button>X</button>
-    </li>`)
-)
-
-const appendList = (array, parent) => {
-  array.forEach(item => { parent.innerHTML += item })
-}
-
-const statePush = (item, array) => {
-  state[array] = [...state[array], item];
-  render()
-}
-
-const handleSubmit = (event) => {
-  event.preventDefault()
-  const title = document.querySelector('.todo-title');
-  const description = document.querySelector('.todo-description');
-  const item = new TodoItem(title.value, description.value);
-  statePush(item, 'todos');
-  title.value = '';
-  description.value = '';
-}
-
-const render = () => {
-  const todosElement = document.querySelector('.todos');
-  todosElement.innerHTML = '';
-  appendList(renderTodoList(state.todos), todosElement);
-  todosElement.querySelectorAll('li')
-    .forEach(item => item.addEventListener('click', (event) => {
-      const index = event.target.dataset.key
-      const doneItem = state.todos.splice(index, 1)[0];
-      event.target.classList.toggle('done')
-      statePush(doneItem, 'dones');
-    }))
-  appendList(renderDoneList(state.dones), todosElement)
-}
-
-
-
-
-
-// const render = () => {
-//   const todosElement = document.querySelector('.todos');
-//   appendList(renderTodoList(state.todos), todosElement)
-//   todosElement.querySelectorAll('li')
-//     .forEach(item => item.addEventListener('click', (event) => {
-//       console.log(event.target.dataset.key) // index of item
-//     }))
-// }
-
-window.onload = () => {
-  document.querySelector('.submit-button')
-    .addEventListener('click', handleSubmit);
-}
-
-// console.log('🚀');
-
-// const setState = (object) => {
-//   state = { ...state, ...object };
-// }
+const todoList = new TodoList();
+console.log(todoList.render())
