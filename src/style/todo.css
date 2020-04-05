@@ -92,9 +92,14 @@ form {
   margin-bottom: 0;
 }
 
-footer {
-  background-color: #ffffff;
+/* footer {
+  background-color: red;
   z-index: 30;
+  border-radius: 0 0 10px 10px;
+} */
+
+form {
+  background-color: #ffffff;
 }
 
 .submit-button {
@@ -167,7 +172,7 @@ form {
     margin-bottom: 10px;
   }
 
-  footer {
+  form {
     border-radius: 0 0 10px 10px;
   }
 }

@@ -18,9 +18,9 @@
   },
   "homepage": "https://github.com/saltsthlm/salt-jsfs-todo#readme",
   "devDependencies": {
-    "eslint": "^6.7.1",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2"
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
   },
   "dependencies": {
     "webpack": "^4.41.2",
