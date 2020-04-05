@@ -1,3 +1,4 @@
+// HELPER FUNCTIONS
 function generateTodoItem(item, key) {
   return `<li><h3 data-key="${key}">${item}</h3></li>`;
 }
@@ -6,6 +7,7 @@ function generateDoneItem(item, key) {
   return `<li class='done'><h3 data-key="${key}">${item}</h3><p><i class="fas fa-times"></i></p></li>`;
 }
 
+// CLASS
 class TodoList {
   constructor() {
     this.state = {
@@ -92,14 +94,19 @@ class TodoList {
   }
 }
 
+// RENDER APP
 const todoList = new TodoList();
 todoList.render();
 
-const button = document.querySelector('.submit-button');
-const input = document.querySelector('.todo-title');
-button.addEventListener('click', (event) => {
+function submitClickHandler(event) {
   event.preventDefault();
+
+  const input = document.querySelector('.todo-title');
+  input.value.trim();
   if (input.value === '') return;
   todoList.addTodoItem(input.value);
   input.value = '';
-});
+}
+
+document.querySelector('.submit-button')
+  .addEventListener('click', submitClickHandler);

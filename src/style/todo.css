@@ -106,7 +106,7 @@ form {
   border: none;
   background-color: #00bcd4;
   color: #ffffff;
-  padding: 10px 19px 10px 19px;
+  padding: 10px 19px 12px 19px;
   margin-right: 20px;
   font-size: 1.8rem;
   border-radius: 50%;
@@ -160,7 +160,7 @@ form {
 
   .submit-button {
     margin-right: 40px;
-    padding: 13px 20px 11px 20px;
+    padding: 10px 20px 12px 20px;
   }
 
   .todos {
