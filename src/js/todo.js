@@ -64,12 +64,25 @@ class TodoList {
       }))
   }
 
+  getCurrentDate() {
+    const months = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    const today = new Date();
+    const month = months[today.getMonth()];
+    const day = today.getDate();
+    const year = today.getFullYear();
+    return `${day} ${month} ${year}`;
+  }
+
   addTodoItem(item) {
     const newTodo = [item, ...this.state.todo];
     this.setState({ todo: newTodo });
   }
 
   render() {
+    document.querySelector('header > p').innerHTML = this.getCurrentDate();
+    this.getCurrentDate();
     localStorage.setItem('todo', this.state.todo)
     localStorage.setItem('done', this.state.done)
     const div = document.querySelector('.todos')
