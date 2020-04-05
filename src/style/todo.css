@@ -121,9 +121,48 @@ footer {
   margin-left: 30px;
   margin-top: 10px;
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid #bababa;
 }
 
 .todo-title:active {
   border: none;
+}
+
+
+@media only screen and (min-width: 500px) {
+  body {
+    background-color: #f5f5f53d;
+  }
+
+  .app {
+    max-width: 500px;
+    height: 900px;
+    max-height: 900px;
+    margin: 50px auto;
+    box-shadow:4px 3px 10px #aaaaaa;
+    border-radius: 10px 10px 10px 10px;
+    position: relative;
+    background-color: #ffffff;
+  }
+
+  header {
+    border-radius: 10px 10px 0 0;
+  }
+
+  .submit-button {
+    margin-right: 40px;
+  }
+
+  .todos {
+    font-size: 1.5rem;
+  }
+
+  .todo-title {
+    margin-left: 40px;
+    margin-bottom: 10px;
+  }
+
+  footer {
+    border-radius: 0 0 10px 10px;
+  }
 }
