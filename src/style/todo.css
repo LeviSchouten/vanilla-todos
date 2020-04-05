@@ -39,10 +39,12 @@ p {
   font-size: 1.3rem;
   max-height: 650px;
   overflow-y: auto;
+  padding-bottom: 30px;
 }
 
 h3:hover {
   text-decoration: line-through;
+  cursor: pointer;
 }
 
 .done {
@@ -56,6 +58,7 @@ h3:hover {
 .done > h3:hover {
   text-decoration: none;
   color: #aaaaaa;
+  cursor: pointer;
 }
 
 button {
@@ -117,6 +120,7 @@ form {
 
 .submit-button:hover {
   background-color: #35d3e8;
+  cursor: pointer;
 }
 
 .todo-title {
@@ -144,14 +148,18 @@ form {
   }
 
   .app {
-    max-width: 500px;
-    height: 900px;
-    max-height: 900px;
+    max-width: 450px;
+    height: 700px;
+    max-height: 700px;
     margin: 50px auto;
     box-shadow:4px 3px 10px #aaaaaa;
     border-radius: 10px 10px 10px 10px;
     position: relative;
     background-color: #ffffff;
+  }
+
+  .todos {
+    max-height: 400px;
   }
 
   header {
